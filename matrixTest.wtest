@@ -1,9 +1,55 @@
+import wollok.mirror.*
+import matrix.*
 
 
 describe "group of tests " {
 
-  test "test 01" {
-    assert.equals(100, 50+50)
+  test "probando a neo" {
+    assert.equals(100, neo.energia())
+
+    neo.saltar()
+    assert.equals(50, neo.energia())
+    neo.esElElegido()
   }
 
+  test "probando a morfeo" {
+    assert.equals(8, morfeo.vitalidad())
+    assert.equals(true, morfeo.estaDescansado())
+
+    morfeo.saltar()
+    assert.equals(7, morfeo.vitalidad())
+    assert.equals(false, morfeo.estaDescansado())
+
+    morfeo.saltar()
+    assert.equals(6, morfeo.vitalidad())
+    assert.equals(true, morfeo.estaDescansado())
+
+    morfeo.esElElegido()
+  }
+
+  test "probando a trinity" {
+    assert.equals(0, trinity.vitalidad())
+    trinity.saltar()
+    assert.equals(0, trinity.vitalidad())
+    trinity.esElElegido()
+  }
+
+  test "probando a la nave" {
+    assert.that(nave.cuantosPasajerosHay() == 0)
+    nave.subirPasajero(neo)
+    nave.subirPasajero(morfeo)
+    nave.subirPasajero(trinity)
+    assert.that(nave.cuantosPasajerosHay() == 3)
+    assert.equals(neo, nave.pasajeroConMasVitalidad())
+    assert.equals(true, nave.estaElElegido())
+    assert.equals(false, nave.estEquilibradaLaVitalidad())
+    nave.acelerar()
+    assert.equals(100, neo.energia())
+    assert.equals(0, trinity.vitalidad())
+    assert.equals(7, morfeo.vitalidad())
+    assert.equals(false, morfeo.estaDescansado())
+    nave.chocar()
+    assert.equals(0, nave.cuantosPasajerosHay())
+    assert.equals(50, neo.energia())
+  }
 }
